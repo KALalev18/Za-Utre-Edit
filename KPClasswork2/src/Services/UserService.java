@@ -15,11 +15,11 @@ public class UserService {
 	private final UserRepository usersRepository;
 	
 	
-    private UserService() {
+    private UserService() throws SQLException {
         this.usersRepository = UserRepository.getInstance();
     }
     
-	public static UserService getInstance(){
+	public static UserService getInstance() throws SQLException{
 
         if (UserService.instance == null) {
         	UserService.instance = new UserService();
@@ -32,12 +32,6 @@ public class UserService {
 		List<User_Info> users = usersRepository.getAllUsers();
 		return users;
 	}
-	
-	public List<User_Info> getAllAdmins() {
-		List<User_Info> users = usersRepository.getAllAdmins();
-		
-		return users;
-	}
 
 	public void deleteUserById(int userId) {
 		usersRepository.deleteUserById(userId);
@@ -47,12 +41,12 @@ public class UserService {
 		usersRepository.makeUserAdminById(userId);
 	}
 	
-	public User getRegisteredUser(String username, String password) {
+	public User_Info getRegisteredUser(String firstName, String lastName, String password) {
 				
-		User user = usersRepository.getRegisteredUser(username);
+		User_Info user = usersRepository.getRegisteredUser(firstName, lastName, password);
 		
 		if(user != null) {
-			boolean hashPassword = PasswordManager.isExpectedPassword(password.toCharArray(), user.getSalt(), user.getPassword().toCharArray());
+			boolean hashPassword = PasswordManager.isExpectedPassword(password.toCharArray(), user.getUser_Password().toCharArray());
 			
 			if(hashPassword == false) {
 				return null;
@@ -60,6 +54,12 @@ public class UserService {
 		}
 		
 		return user;
+	}
+
+	public List<User_Info> getAllAdmins() {
+		List<User_Info> admins = usersRepository.getAllAdmins();
+		
+		return admins;
 	}
 
 }

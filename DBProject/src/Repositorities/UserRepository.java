@@ -15,7 +15,7 @@ import Utils.DatabaseConnection;
 
 public class UserRepository 
 {
-	private String url = "jdbc:sqlserver://DESKTOP-9GQVKQN\\sqlexpress;databaseName=Project_Database;integratedSecurity=true";
+	private String url = "jdbc:sqlserver://SD2324\\sqlexpress;databaseName=Project_Database;integratedSecurity=true";
 	//private static UserRepository instance = null;
 	private static Connection conn;
 	private static UserRepository instance = null;
